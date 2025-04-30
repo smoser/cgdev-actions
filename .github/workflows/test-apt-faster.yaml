@@ -63,6 +63,13 @@ jobs:
           sudo apt-get --quiet --assume-yes install $pkgs |
               tee apt-get-install.log
 
+      - name: "show apt configs"
+        run: |
+          find /etc/apt/apt.conf /etc/apt/apt.conf.d -type f | while read f ; do
+             echo === $f ===
+             cat $f
+          done
+
       - name: "show configs"
         run: |
           for f in \
