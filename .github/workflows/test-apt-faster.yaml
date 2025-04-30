@@ -42,14 +42,25 @@ jobs:
       - name: "apt-get download-only"
         run: |
           # do a large number of downloads
-          sudo apt-get --quiet --assume-yes install --download-only \
-              python3-ipython python3-sphinx qemu-system-x86 |
+          pkgs="
+          alsa
+          alsa-utils
+          ipxe
+          ovmf
+          python3-ipython
+          python3-sphinx
+          qemu-block-extra
+          qemu-system
+          qemu-utils
+          "
+          echo "$pkgs" > pkg.list
+          sudo apt-get --quiet --assume-yes install --download-only $pkgs |
               tee apt-get-download.log
 
       - name: "check apt install"
         run: |
-          sudo apt-get --quiet --assume-yes install \
-              python3-ipython python3-sphinx qemu-system-x86 |
+          pkgs=$(cat pkg.list)
+          sudo apt-get --quiet --assume-yes install $pkgs |
               tee apt-get-install.log
 
       - name: "show configs"
