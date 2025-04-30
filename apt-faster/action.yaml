@@ -116,3 +116,13 @@ runs:
       run: |
         echo "set man-db/auto-update false" | sudo debconf-communicate
         sudo dpkg-reconfigure --frontend=noninteractive man-db
+
+    - name: install - enable http pipelining
+      shell: bash
+      run: |
+        f=/etc/apt/apt.conf.d/99aptfaster
+        sudo tee -a "$f" >/dev/null <<"EOF"
+        # enable http pipelining
+        Acquire::http::Pipeline-Depth "16";
+        Acquire::https::Pipeline-Depth "16";
+        EOF
