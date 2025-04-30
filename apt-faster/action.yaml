@@ -120,6 +120,7 @@ runs:
     - name: install - enable http pipelining
       shell: bash
       run: |
+        echo "not doing pipelining"; exit 0;
         f=/etc/apt/apt.conf.d/99aptfaster
         sudo tee -a "$f" >/dev/null <<"EOF"
         # enable http pipelining
