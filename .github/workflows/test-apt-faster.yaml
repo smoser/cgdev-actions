@@ -39,10 +39,18 @@ jobs:
           set -o pipefail
           sudo apt-get --quiet update 2>&1 | tee apt-get-update.log
 
+      - name: "apt-get download-only"
+        run: |
+          # do a large number of downloads
+          sudo apt-get --quiet --assume-yes install --download-only \
+              python3-ipython python3-sphinx qemu-system-x86 |
+              tee apt-get-download.log
+
       - name: "check apt install"
         run: |
           sudo apt-get --quiet --assume-yes install \
-            python3-venv qemu-system-x86 | tee apt-get-install.log
+              python3-ipython python3-sphinx qemu-system-x86 |
+              tee apt-get-install.log
 
       - name: "show configs"
         run: |
